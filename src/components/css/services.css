@@ -1,0 +1,23 @@
+.services{
+    background-color: rgb(245, 181, 218);
+    margin-top: 150px;
+    margin-bottom: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1030px;
+    height: auto;
+    padding: 70px;
+}
+
+.serviceselement{
+    margin-left: 200px;
+    margin-right: 200px;
+}
+
+.form-column{
+    columns: 1;
+    column-gap: 100px;
+    column-width: 300px;
+}
+
+

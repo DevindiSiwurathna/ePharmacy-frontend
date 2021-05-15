@@ -1,0 +1,31 @@
+export const homeObjOne = {
+    primary:true, 
+    lightBg: false,    
+    imgStart: true, 
+    lightTopLine: true,
+    lightTextDesc:true, 
+    buttonLabel: 'Get Started', 
+    description: 'We help you to get your essential medicinal requirments to your doorstep!', 
+    headline: 'Lead Generation Specialist for Online pharmacing',
+    lightText:true,
+    topLine:'YOUR HEALTH - OUR WEALTH',
+    img: require('./img/pic.svg').default, 
+    alt:'we deliver you the best!',
+    start: true,
+};
+
+export const homeObjTwo = {
+    primary:false, 
+    lightBg: true,
+    imgStart: false, 
+    lightTopLine: false,
+    lightTextDesc:false, 
+    buttonLabel: 'Get Started', 
+    description: 'We help you to get your customers', 
+    headline: 'Lead Generation Specialist for Online pharmacing',
+    lightText:false,
+    topLine:'YOUR HEALTH - OUR WEALTH',
+    img:require('./img/pic3.svg').default,
+    alt:'This is easy!',
+    start: false,
+};
