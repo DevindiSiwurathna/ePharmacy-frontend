@@ -9,15 +9,25 @@ class Search extends Component {
         this.state = {
             pharmacies: [],
             pharname:'',
+            value1:'byname',
             errorMsg: ''
 
              
         }
+
+       
     }
 
     changeHandler = e => {
         this.setState({ pharname: e.target.value})
     }
+
+    changeHandler2 = e => {
+        this.setState({ value1: e.target.value1})
+    }
+
+    
+
 
    submitHandler = e => {
 
@@ -43,19 +53,29 @@ class Search extends Component {
         }) 
         .catch(error => {
             console.log(error)
-            this.setState({errorMsg: 'Error retrieving data'})
+            this.setState({errorMsg: 'Error retrieving data'}) checked={this.state.searchby==="bydistrict"}
         }) 
       }*/
     
     render() {
         const { pharmacies } = this.state
 
+        const { value1 } = this.state
+
+
+
         return (
             <div>
                 <div className="outer">
                 <div className="inner4">
-        
-                 <h1>Search Pharmacy</h1>
+                <h1>Search Pharmacy</h1>
+
+                <input type="radio" value1="byname" checked={value1 === "byname"} onChange={this.changeHandler2} /><label>.  Search by name</label>
+                <br></br>
+
+                <input type="radio" value1="bydistrict" checked={value1 === "bydistrict"} onChange={this.changeHandler2} /><label>.  Search by district</label>
+
+                 
                  <form onSubmit={this.submitHandler}>
                     <div>
                         <input type="text" placeholder="Enter pharmacy name" onChange={this.changeHandler} />

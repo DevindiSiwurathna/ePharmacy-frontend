@@ -1,4 +1,4 @@
-/*import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Pharmacy from './Pharmacy'
 
 import axios from "axios";
@@ -34,5 +34,5 @@ export default function  PharmacyList() {
             </div>
             
     )
-}*/
+}
 

@@ -11,7 +11,7 @@ class Districtpharmacy extends React.Component{
       
         componentDidMount() {
           console.log(this.state)
-          fetch("https://localhost:44357/api/Pharmacies/district/"+this.props.district)
+          fetch("https://localhost:44357/api/Pharmacies?field=district&value="+this.props.district)
             .then(response => response.json())
             .then(pharmacy => this.setState({pharmacy: pharmacy}));
             //console.log(this.state)

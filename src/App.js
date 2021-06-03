@@ -20,14 +20,105 @@ import working from './components/working';
 import Forgotpassword from './components/forgotpassword';
 import sendmessage from './components/sendmessage';
 import messagesuccess from './components/messagesuccess';
-//import Ph from "./components/Ph";
+import Ph from "./components/Ph";
 import Search from "./components/Search";
 //import Addproduct from "./components/Addproduct";
 import ProductList from "./components/ProductList";
 
 
 
-function App() {
+export default class App extends Component {
+
+  state = {
+
+    userrole : '',
+    userid   : ''
+
+  };
+
+componentDidMount() {
+
+  if(localStorage.login)
+  {
+    const currentuser     = JSON.parse(atob(localStorage.login.split(".")[1])); 
+    this.setState( {userrole: currentuser.role });
+    this.setState( {userid: currentuser.id });
+  }
+
+}
+
+render() {
+
+if(this.state.userrole === "Customer"){
+  return (<Router>
+    <GlobalStyle/>
+    <div className="App">
+      <nav className="navbar navbar-expand-lg navbar-light fixed-top">
+        <div className="container">
+          <Link className="navbar-brand">ORDER YOUR HEALTH & WELLNESS PRODUCTS ONLINE TODAY!</Link>
+          <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul className="navbar-nav ml-auto">
+                <li className="nav-item"> 
+                <Link className="nav-link" to={"/"}>Home</Link>
+                </li>
+                <li className="nav-item">
+                <Link className="nav-link" to={"/search"}>Search Pharmacy</Link>
+                </li>
+                <li className="nav-item">
+                <Link className="nav-link" to={"/district"}>Place an order</Link>
+                </li>
+                <li className="nav-item">
+                <Link className="nav-link" to = {"/services"}>Services</Link>
+                </li>
+                <li>
+              <Link to="/cart" className="ml-auto">
+                <ButtonContainer>
+                    <span className="mr-2">
+                    <i className="fas fa-cart-plus"/>
+                    </span>
+                    my cart 
+                </ButtonContainer>
+              </Link>
+              </li>
+              <button type="submit" className="btn btn-dark btn-sm" onClick={() => localStorage.clear()}>Logout</button>
+              
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <Switch> <Route exact path='/' exact component={Home} /></Switch> 
+                       
+            <Switch>
+        
+            <Route path="/district" component={District} />
+            <Route path="/upload" component={Upload} />
+            <Route path = "/services" component={Services}/>
+            <Route path = "/Cart" component={Cart}/>
+            <Route path = "/Details" component={Details}/>
+            <Route path="/terms" component={terms} />
+            <Route path="/working" component={working} />
+            <Route path="/sendmessage" component={sendmessage} />
+            <Route path="/messagesuccess" component={messagesuccess} />
+            <Route path="/search" component={Search} />
+
+            {/*<Route path="/Addproduct" component={Addproduct} />*/}
+            <Route path="/ProductList" component={ProductList} />
+
+        </Switch>
+         <Footer/>
+        </div>
+      
+    </Router>
+  );
+}
+
+else if(this.state.userrole === "Pharmacy"){
+
+
+}
+
+else {
+
   return (<Router>
     <GlobalStyle/>
     <div className="App">
@@ -48,23 +139,9 @@ function App() {
                 <li className="nav-item">
                 <Link className="nav-link" to={"/search"}>Search Pharmacy</Link>
                 </li>
-                <li className="nav-item">
-                <Link className="nav-link" to = {"/services"}>Services</Link>
-                </li>
                 <li className="nav-item"> 
                 <Link className="nav-link" to={"/"}>Home</Link>
                 </li>
-
-                <li>
-              <Link to="/cart" className="ml-auto">
-                <ButtonContainer>
-                    <span className="mr-2">
-                    <i className="fas fa-cart-plus"/>
-                    </span>
-                    my cart 
-                </ButtonContainer>
-              </Link>
-              </li>
               
             </ul>
           </div>
@@ -77,22 +154,14 @@ function App() {
           
             <Route path="/sign-in" component={Login} />
             <Route path="/sign-up-as-customer" component={SignUpascustomer} />
-            <Route path="/sign-up-as-pharmacy" component={SignUpaspharmacy} />
-            <Route path="/district" component={District} />
-            <Route path="/upload" component={Upload} />
+            <Route path="/sign-up-as-pharmacy" component={Ph} />
             <Route path = "/pharmacy" component={Pharmacy}/>
-            <Route path = "/services" component={Services}/>
-            <Route path = "/Cart" component={Cart}/>
-            <Route path = "/Details" component={Details}/>
             <Route path="/terms" component={terms} />
             <Route path="/working" component={working} />
             <Route path="/Forgotpassword" component={Forgotpassword} />
-            <Route path="/sendmessage" component={sendmessage} />
-            <Route path="/messagesuccess" component={messagesuccess} />
             <Route path="/search" component={Search} />
 
             {/*<Route path="/Addproduct" component={Addproduct} />*/}
-            <Route path="/ProductList" component={ProductList} />
 
         </Switch>
          <Footer/>
@@ -100,7 +169,10 @@ function App() {
       
     </Router>
   );
+
+
+
 }
 
-export default App;
-
+}
+}

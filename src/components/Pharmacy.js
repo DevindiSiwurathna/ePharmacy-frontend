@@ -1,5 +1,5 @@
-/*import React, { useState, useEffect } from 'react'
-import { BrowserRouter as Route, Switch, Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react'
+
 const defaultImageSrc = '/img/default-user-image.png'
 
 const initialFieldValues = {
@@ -144,7 +144,7 @@ export default function Pharmacy(props) {
                         </div>
                         <div className="form-group">
                         <label>TeleNo</label>
-                            <input className={"form-control" + applyErrorClass('TeleNo')} placeholder="Enter telephone no" name="TeleNo"
+                            <input className={"form-control" + applyErrorClass('TeleNo')} placeholder="Enter teleno" name="TeleNo"
                                 value={values.TeleNo}
                                 onChange={handleInputChange} />
                         </div>
@@ -159,7 +159,7 @@ export default function Pharmacy(props) {
                             <button type="submit"  className="btn btn-dark btn-lg btn-block">Register</button>
                         </div>
                         <p className="forgot-password text-right">
-                        Already registered <Link to="/sign-in">log in?</Link>
+                            Already registered <a href="#">log in?</a>
                         </p>
                     </div>
                 </div>
@@ -168,4 +168,4 @@ export default function Pharmacy(props) {
             </div>
         </>
     )
-} */
+}
