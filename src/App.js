@@ -114,6 +114,49 @@ if(this.state.userrole === "Customer"){
 
 else if(this.state.userrole === "Pharmacy"){
 
+  return (<Router>
+    <GlobalStyle/>
+    <div className="App">
+      <nav className="navbar navbar-expand-lg navbar-light fixed-top">
+        <div className="container">
+          <Link className="navbar-brand">ORDER YOUR HEALTH & WELLNESS PRODUCTS ONLINE TODAY!</Link>
+          <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul className="navbar-nav ml-auto">
+                <li className="nav-item"> 
+                <Link className="nav-link" to={"/"}>Home</Link>
+                </li>
+                <li className="nav-item">
+                <Link className="nav-link" to={"/search"}>Search Pharmacy</Link>
+                </li>
+                <li className="nav-item">
+                <Link className="nav-link" to = {"/services"}>Services</Link>
+                </li>
+              <button type="submit" className="btn btn-dark btn-sm" onClick={() => localStorage.clear()}>Logout</button>
+              
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <Switch> <Route exact path='/' exact component={Home} /></Switch> 
+                       
+            <Switch>
+            <Route path = "/services" component={Services}/>
+            <Route path="/terms" component={terms} />
+            <Route path="/working" component={working} />
+            <Route path="/sendmessage" component={sendmessage} />
+            <Route path="/messagesuccess" component={messagesuccess} />
+            <Route path="/search" component={Search} />
+
+            {/*<Route path="/Addproduct" component={Addproduct} />*/}
+            <Route path="/ProductList" component={ProductList} />
+
+        </Switch>
+         <Footer/>
+        </div>
+      
+    </Router>
+  );
+
 
 }
 
