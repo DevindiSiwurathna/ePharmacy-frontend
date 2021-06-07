@@ -18,13 +18,14 @@ class Districtpharmacy extends React.Component{
         }      
 
 render(){
-   // console.log(this.state)
+   //console.log(this.state)
     const pharm=this.state.pharmacy.map((pharmacies) =>{
     return(<option value ={pharmacies.id}>{pharmacies.pharmacyname},{pharmacies.address}</option>)})
     return(
         <div>
         <label class="label" for="district"><span>{this.props.district}</span></label>
-        <select className="form-control select-dropdown"><option>Select Pharmacy</option>{pharm}</select>
+        <select name="phmcy" className="form-control select-dropdown" ><option value="">Select Pharmacy</option>{pharm}</select>
+        
         </div>
     )
 }

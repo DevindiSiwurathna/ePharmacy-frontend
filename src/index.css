@@ -7,7 +7,7 @@ body {
   display: flex;
   font-weight: 50;
   font-family: sans-serif;
-  background-image: url('./components/images/background 4.jpg');
+  /*background-image: url('./components/images/background 4.jpg');
  /*background-blend-mode: luminosity;*/
  /*  background: #12c2e9;  fallback for old browsers 
   background: -webkit-linear-gradient(to right, #f64f59, #c471ed, #12c2e9);  
