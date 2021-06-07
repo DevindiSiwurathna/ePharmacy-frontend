@@ -1,20 +1,28 @@
 import React,{ Component } from 'react';
 //import { Router } from 'react-router-dom/cjs/react-router-dom.min';
-import { Link } from "react-router-dom";
+import { Link, useParams, withRouter } from "react-router-dom";
+
 import './district.css';
 import Upload from "./upload.component";
 import Districtpharmacy from "./districtpharmacy.component";
+
 class District extends React.Component{
     state = {
         pharmacy: []
       };
-    
+     
+     
+
+   
     render(){
+       // const {custid} = useParams();
+        //console.log(custid);
         return(
 
             <div className="container">
 
                 <div className="container district">
+                <form action="/uploadlist" method="get">
                     <div className="row">
                         <div className="container header">
                         <h1>Select your District and Nearby Pharmacy</h1>
@@ -23,7 +31,7 @@ class District extends React.Component{
                     </div>
                     
                 <div className="row">
-                <div className="form-column">
+               <div className="form-column">
                 <Districtpharmacy district="Mathara"/>
                 <Districtpharmacy district="Galle"/>
                 <Districtpharmacy district="Hambantota"/>
@@ -32,7 +40,7 @@ class District extends React.Component{
                 <Districtpharmacy district="Gampaha"/>
                 <Districtpharmacy district="Rathnapura"/>
                 <Districtpharmacy district="Kurunegala"/>
-                </div>
+        </div>
             
                 <div className="form-column">
                 <Districtpharmacy district="Monaragala"/>
@@ -43,7 +51,7 @@ class District extends React.Component{
                 <Districtpharmacy district="Kegalla"/>
                 <Districtpharmacy district="Matale"/>
                 <Districtpharmacy district="Badulla"/>
-                <Districtpharmacy district="Ampara"/>
+    <Districtpharmacy district="Ampara"/>
                 </div>
                
                 <div className="form-column">
@@ -55,14 +63,20 @@ class District extends React.Component{
                 <Districtpharmacy district="Mulaitivu"/>
                 <Districtpharmacy district="Kilinochchi"/>
                 <Districtpharmacy district="Jaffna"/>
-                </div>
+               </div>
                 </div>
 
                     <div>
                        <br/>
-                       <Link to = "/upload" ><button type="button" className="districtSelectButton" value = "Add Prescription" >Add Prescription</button></Link>
+                       <Link to = "/uploadlist" ><button type="button" className="districtSelectButton" value = "Add Prescription" >Add Prescription</button></Link>
                     </div>
                     <br/>
+                    <button type="submit" >Add</button>
+                    </form>
+
+                    
+  
+
                 </div>
 
             </div> 
@@ -70,6 +84,9 @@ class District extends React.Component{
         
         );
     }
+
+    
+
 }
 
-export default District
+export default withRouter(District);

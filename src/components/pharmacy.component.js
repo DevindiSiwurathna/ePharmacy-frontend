@@ -1,88 +1,90 @@
-import React,{ Component } from 'react';
-//import { Link } from "react-router-dom";
-import './district.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link, useParams } from "react-router-dom";
 
-import axios from 'axios'
-import ReactTable from "react-table"; 
-import 'react-table/react-table.css'
-class Pharmacy extends Component{
-    constructor(props){
-        super(props)
-        let now=new Date()
-        this.state = {
-          orders: [],
-          loading:true,
-          date:now
-        }
-      }
+const Pharmacy = () => {
+  const [orders, setOrder] = useState([]);
 
-      async getOrdersData(){
-        const res = await axios.get('https://localhost:44357/api/Orders?field=pharmacy&value1=2&value2=date&date='+this.state.date)
-        console.log(res.data)
-        this.setState({loading:false, orders: res.data})
-      }
-      componentDidMount(){
-        this.getOrdersData()
-      }
+  const {phmid} = useParams();
+  console.log(phmid);
 
-      
-    render(){
-        
-        const columns = [{  
-            Header: 'Date',  
-            accessor: 'Date_time',
-           }
-           ,{  
-            Header: 'Cutomer Name',  
-            accessor: 'CustomerName' ,
-            }
-           
-           ,{  
-           Header: 'Cutomer ID',  
-           accessor: 'Customer_id' ,
-           }
-           ,{  
-           Header: 'Telephone',  
-           accessor: 'TeleNo',
-           },
-           {  
-            Header: 'Address',  
-            accessor: 'Address',
-            },
-            {  
-            Header: 'Email',  
-            accessor: 'Email',
-            }
-        ]
+  useEffect(() => {
+    loadOrders();
+  }, []);
 
-        return(
+  const loadOrders = async () => {
+    const result = await axios.get(`https://localhost:44357/api/Orders/PharmacyId/${phmid}`);
+    setOrder(result.data.reverse());
+  };
 
-            <div className="container outer">
-            
-                <div className="container district inner">
-                <div className="row">
-                        <div className="container pharmacy">
-                            <h1>Hello!</h1>
-                            <h2>Lanka Pharmacy</h2>
-                            <p>Elpitiya</p>
-                            <p1>View your new orders</p1>
-                        </div>  
+  /*const deleteOrder = async orderId => {
+    await axios.delete(`http://localhost:44357/Orders/${orderId}`);
+    loadOrders();
+  };*/
 
-                        <div className="container table">  
-                        <ReactTable  
-                            data={this.state.orders}  
-                            columns={columns}  
-                        />
-                        </div>           
-                 </div>
-                   
-                </div>
+  return (
+    <div className="container">
+      <div className="py-4">
+        <h1>Pharmacy Name</h1>
+        <table class="table border shadow">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Index</th>
+              <th scope="col">OrderID</th>
+              <th scope="col">DateTime</th>
+             
+             
+              <th scope="col">customerName</th>
+              
+              <th scope="col">patientAge</th>
+              <th scope="col">Address</th>
+              
+              <th scope="col">teleNo</th>
+              <th scope="col">customerId</th>
+              <th scope="col">Is Complete?</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders.map((order, index) => (
+              <tr>
+                <th scope="row">{index + 1}</th>
+                <td>{order.orderID}</td>
+          <td>{order.dateTime}</td>
 
-            </div>
+          
+          <td>{order.customerName}</td>
+          
+          <td>{order.patientAge}</td>
+          <td>{order.address}</td>
+         
+          <td>{order.teleNo}</td>
+          <td>{order.customerId}</td>
+          
+          <td>
+            <p className={
+              order.complete ? "btn btn-success" : "btn btn-danger"}>
+               {order.complete ? "Completed" : "Pending"} 
+              </p>
+          </td>
+          
+                <td>
+                  <Link class="btn btn-primary mr-2" to={`/orders/${order.orderID}`}>
+                    View
+                  </Link>
+                  
+                  
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
 
-            
-        );
-    }
-}
+export default Pharmacy;
 
-export default Pharmacy
+
+

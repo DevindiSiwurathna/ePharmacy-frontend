@@ -9,7 +9,8 @@ import Login from "./components/login.component";
 import SignUpascustomer from "./components/signup.component";
 import SignUpaspharmacy from "./components/pharmacyaccount";
 import District from './components/district.component';
-import Upload from './components/upload.component';
+import Upload from './components/upload/Upload';
+import UploadList from "./components/upload/Uploadlist";
 import Pharmacy from "./components/pharmacy.component";
 import Services from "./components/services.component";
 import Details from './components/services/Details';
@@ -24,8 +25,9 @@ import Ph from "./components/Ph";
 import Search from "./components/Search";
 //import Addproduct from "./components/Addproduct";
 import ProductList from "./components/ProductList";
-
-
+import Order from './components/orders/order';
+import Customer from "./components/customer";
+//import CustomerService from "./components/customerservice";
 
 export default class App extends Component {
 
@@ -43,6 +45,7 @@ componentDidMount() {
     const currentuser     = JSON.parse(atob(localStorage.login.split(".")[1])); 
     this.setState( {userrole: currentuser.role });
     this.setState( {userid: currentuser.id });
+    
   }
 
 }
@@ -50,6 +53,11 @@ componentDidMount() {
 render() {
 
 if(this.state.userrole === "Customer"){
+  {/*<Customer custid={this.state.userid} />*/}
+  //console.log(this.state.userid);
+  const custid=this.state.userid;
+  console.log(custid);
+  
   return (<Router>
     <GlobalStyle/>
     <div className="App">
@@ -65,10 +73,13 @@ if(this.state.userrole === "Customer"){
                 <Link className="nav-link" to={"/search"}>Search Pharmacy</Link>
                 </li>
                 <li className="nav-item">
-                <Link className="nav-link" to={"/district"}>Place an order</Link>
+                <Link className="nav-link" to={`district/${custid}`}>Place an order</Link>
                 </li>
                 <li className="nav-item">
                 <Link className="nav-link" to = {"/services"}>Services</Link>
+                </li>
+                <li className="nav-item"> 
+                <Link className="nav-link" to={`/customer/${custid}`}>Customer</Link>
                 </li>
                 <li>
               <Link to="/cart" className="ml-auto">
@@ -91,7 +102,12 @@ if(this.state.userrole === "Customer"){
             <Switch>
         
             <Route path="/district" component={District} />
-            <Route path="/upload" component={Upload} />
+            <Route path="/Upload" component={Upload} />
+            {/*<Route path="/Uploadlist" component={UploadList} />*/}
+            {/*<Route path="/Uploadlist" render={props => <UploadList {...props.match.params} />}/>*/}
+           {/* <Route path="/Uploadlist" component={props => <UploadList custid={props.match.params.custid}/>}/> */}
+            <Route path="/Uploadlist" render={props => (<UploadList custid={this.state.userid} />)}/> 
+            
             <Route path = "/services" component={Services}/>
             <Route path = "/Cart" component={Cart}/>
             <Route path = "/Details" component={Details}/>
@@ -100,10 +116,10 @@ if(this.state.userrole === "Customer"){
             <Route path="/sendmessage" component={sendmessage} />
             <Route path="/messagesuccess" component={messagesuccess} />
             <Route path="/search" component={Search} />
-
+            <Route path = "/customer/:custid" component={Customer}/>
             {/*<Route path="/Addproduct" component={Addproduct} />*/}
             <Route path="/ProductList" component={ProductList} />
-
+            {/*<Route path="/CustomerService" component={CustomerService} />*/}
         </Switch>
          <Footer/>
         </div>
@@ -113,6 +129,9 @@ if(this.state.userrole === "Customer"){
 }
 
 else if(this.state.userrole === "Pharmacy"){
+
+  const phmid=this.state.userid;
+  console.log(phmid);
 
   return (<Router>
     <GlobalStyle/>
@@ -131,6 +150,9 @@ else if(this.state.userrole === "Pharmacy"){
                 <li className="nav-item">
                 <Link className="nav-link" to = {"/services"}>Services</Link>
                 </li>
+                <li className="nav-item"> 
+                <Link className="nav-link" to={`/pharmacy/${phmid}`}>pharmacy</Link>
+                </li>
               <button type="submit" className="btn btn-dark btn-sm" onClick={() => localStorage.clear()}>Logout</button>
               
             </ul>
@@ -146,7 +168,8 @@ else if(this.state.userrole === "Pharmacy"){
             <Route path="/sendmessage" component={sendmessage} />
             <Route path="/messagesuccess" component={messagesuccess} />
             <Route path="/search" component={Search} />
-
+            <Route path = "/pharmacy/:phmid" component={Pharmacy}/>
+            <Route path = "/orders/:orderID" component = {Order}/>
             {/*<Route path="/Addproduct" component={Addproduct} />*/}
             <Route path="/ProductList" component={ProductList} />
 

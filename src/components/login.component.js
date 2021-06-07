@@ -35,7 +35,7 @@ export default class Login extends Component {
             email : this .Email,
             password: this .Password
         }
-        
+        console.log(this.email);
         
         /*axios
            .post('/api/UserLogin', logingdata)
@@ -61,10 +61,14 @@ export default class Login extends Component {
                console.log(response); //to print response in console in developper tool
                //const currentuser = JSON.parse(atob(response.data.token.split(".")[1])); 
                localStorage.setItem('login', response.data.token);
+              console.log(this.Email);{
+                  const loginmail=logingdata.email
+                  console.log(loginmail);
+              }
                
            })
            .catch(error => {
-               console.log(error)
+               console.log(error => console.log(error.response.data))
            })
     }
 
@@ -83,6 +87,7 @@ export default class Login extends Component {
 			)
 		
 		}*/
+        
 
         return (
 
@@ -94,8 +99,9 @@ export default class Login extends Component {
 
                 <div className="form-group">
                     <label>Email</label>
-                    <input type="text" className="form-control" placeholder="Enter email" onChange ={ e => this.Email = e.target.value} />
+                    <input name="loginemail" type="text" className="form-control" placeholder="Enter email" onChange ={ e => this.Email = e.target.value} />
                 </div>
+               
 
                 <div className="form-group">
                     <label>Password</label>
