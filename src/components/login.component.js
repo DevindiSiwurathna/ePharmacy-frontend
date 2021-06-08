@@ -1,11 +1,19 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import axios from 'axios'
+import axios from 'axios';
+import {useHistory} from "react-router-dom"
+
 //import district from "./district.component"; <Link to= "/district" ><button type="button" className="btn btn-dark btn-lg btn-block">Sign in as customer</button></Link>
 
 export default class Login extends Component {
 
+  /*  handleClick = e => {
+        this.props.history.push("/customer");
+      };*/
+
     state = {};
+
+     
 
 	/*componentDidMount() {
 	   
@@ -27,7 +35,7 @@ export default class Login extends Component {
 	
 	}*/
 
-
+//let history = useHistory();
     submitHandler = e => {
         e.preventDefault()
 
@@ -35,7 +43,7 @@ export default class Login extends Component {
             email : this .Email,
             password: this .Password
         }
-        console.log(this.email);
+        //console.log(this.email);
         
         /*axios
            .post('/api/UserLogin', logingdata)
@@ -54,6 +62,7 @@ export default class Login extends Component {
                console.log(error)
            })*/
 
+          
            axios
            .post('/api/UserLogin', logingdata)
 
@@ -72,6 +81,7 @@ export default class Login extends Component {
            })
     }
 
+    
     render() {
 
         /*if(this.state.user){
@@ -96,7 +106,7 @@ export default class Login extends Component {
             <form onSubmit={ this.submitHandler}>
 
                 <h3>Log in</h3>
-
+                
                 <div className="form-group">
                     <label>Email</label>
                     <input name="loginemail" type="text" className="form-control" placeholder="Enter email" onChange ={ e => this.Email = e.target.value} />
@@ -118,7 +128,7 @@ export default class Login extends Component {
                 
                 
                 <br></br>
-                <button type="submit" className="btn btn-dark btn-lg btn-block">Sign in</button>
+                <button type="submit" className="btn btn-dark btn-lg btn-block" >Sign in</button>
                 <p className="forgot-password text-right">
                     Forgot <Link to= "/Forgotpassword" >password?</Link>
                 </p>
