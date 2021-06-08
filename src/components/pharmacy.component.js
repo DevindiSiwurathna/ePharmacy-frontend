@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 
-const Pharmacy = () => {
+const Pharmacy = ({phmname}) => {
   const [orders, setOrder] = useState([]);
 
   const {phmid} = useParams();
@@ -25,7 +25,7 @@ const Pharmacy = () => {
   return (
     <div className="container">
       <div className="py-4">
-        <h1>Pharmacy Name</h1>
+        <h1>{phmname}</h1><hr/>
         <table class="table border shadow">
           <thead class="thead-dark">
             <tr>

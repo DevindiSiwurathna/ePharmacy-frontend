@@ -60,6 +60,7 @@ render() {
 if(this.state.userrole === "Customer"){
   {/*<Customer custid={this.state.userid} />*/}
   console.log(this.state.username);
+  const custname=this.state.username;
   const custid=this.state.userid;
   console.log(custid);
   
@@ -125,7 +126,7 @@ if(this.state.userrole === "Customer"){
             <Route path="/sendmessage" component={sendmessage} />
             <Route path="/messagesuccess" component={messagesuccess} />
             <Route path="/search" component={Search} />
-            <Route path = "/customer/:custid" component={Customer}/>
+            <Route path = "/customer/:custid" render={props => (<Customer custname={this.state.username} />)}/>
             {/*<Route path="/Addproduct" component={Addproduct} />*/}
             <Route path="/ProductList" component={ProductList} />
             {/*<Route path="/CustomerService" component={CustomerService} />*/}
@@ -142,6 +143,7 @@ else if(this.state.userrole === "Pharmacy"){
   const phmid=this.state.userid;
   console.log(phmid);
 
+  const custname=this.state.username;
   return (<Router>
     <GlobalStyle/>
     <div className="App">
@@ -177,7 +179,7 @@ else if(this.state.userrole === "Pharmacy"){
             <Route path="/sendmessage" component={sendmessage} />
             <Route path="/messagesuccess" component={messagesuccess} />
             <Route path="/search" component={Search} />
-            <Route path = "/pharmacy/:phmid" component={Pharmacy}/>
+            <Route path = "/pharmacy/:phmid" render={props => (<Pharmacy phmname={this.state.username} />)}/>
             <Route path = "/orders/:orderID" component = {Order}/>
             {/*<Route path="/Addproduct" component={Addproduct} />*/}
             <Route path="/ProductList" component={ProductList} />
