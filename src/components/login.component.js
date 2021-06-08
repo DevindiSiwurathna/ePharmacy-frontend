@@ -1,11 +1,17 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import axios from 'axios'
+import axios from 'axios';
+import {Redirect} from "react-router-dom";
+
 //import district from "./district.component"; <Link to= "/district" ><button type="button" className="btn btn-dark btn-lg btn-block">Sign in as customer</button></Link>
 
 export default class Login extends Component {
 
-    state = {};
+    state = {
+
+        isloggedin : '',
+        msg :''
+    };
 
 	/*componentDidMount() {
 	   
@@ -61,34 +67,46 @@ export default class Login extends Component {
                console.log(response); //to print response in console in developper tool
                //const currentuser = JSON.parse(atob(response.data.token.split(".")[1])); 
                localStorage.setItem('login', response.data.token);
+               this.setState( { isloggedin : 'true'});
                
            })
            .catch(error => {
                console.log(error)
+               this.setState({
+                   msg : 'Invalid Email/Password' 
+               })
            })
     }
 
     render() {
 
-        /*if(this.state.user){
+        if(this.state.isloggedin=== "true"){
 			return (
 
-                <div className="outer">
-                 <div className="inner"> 
-				<h2>You are logged in</h2>
-                <button type="submit" className="btn btn-dark btn-lg btn-block" onClick={() => localStorage.clear()}>logout</button>
-                </div>
-                </div>
+               <Redirect to ={'/Home'} />
 			
 			)
 		
-		}*/
+		}
 
+        let errr ='';
+
+        if (this.state.msg){
+
+            errr =(
+                <div className="alert alert-danger" role="alert" >
+                    {this.state.msg}
+                </div>
+            )
+        }
+
+        
         return (
 
             <div className="outer">
             <div className="inner"> 
             <form onSubmit={ this.submitHandler}>
+                { errr }
 
                 <h3>Log in</h3>
 
@@ -120,5 +138,6 @@ export default class Login extends Component {
             </div>
             </div>
         );
+    
     }
 }

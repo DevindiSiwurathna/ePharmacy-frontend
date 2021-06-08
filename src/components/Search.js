@@ -9,7 +9,6 @@ class Search extends Component {
         this.state = {
             pharmacies: [],
             pharname:'',
-            value1:'byname',
             errorMsg: ''
 
              
@@ -20,10 +19,6 @@ class Search extends Component {
 
     changeHandler = e => {
         this.setState({ pharname: e.target.value})
-    }
-
-    changeHandler2 = e => {
-        this.setState({ value1: e.target.value1})
     }
 
     
@@ -41,7 +36,7 @@ class Search extends Component {
            })
            .catch(error => {
                console.log(error)
-               this.setState({errorMsg: 'Error retrieving data'})
+               this.setState({errorMsg: 'No result found'})
            })
     }
 
@@ -62,6 +57,17 @@ class Search extends Component {
 
         const { value1 } = this.state
 
+        let errr ='';
+
+        if (this.state.msg){
+
+            errr =(
+                <div className="alert alert-danger" role="alert" >
+                    {this.state.errorMsg}
+                </div>
+            )
+        }
+
 
 
         return (
@@ -70,13 +76,9 @@ class Search extends Component {
                 <div className="inner4">
                 <h1>Search Pharmacy</h1>
 
-                <input type="radio" value1="byname" checked={value1 === "byname"} onChange={this.changeHandler2} /><label>.  Search by name</label>
-                <br></br>
-
-                <input type="radio" value1="bydistrict" checked={value1 === "bydistrict"} onChange={this.changeHandler2} /><label>.  Search by district</label>
-
                  
                  <form onSubmit={this.submitHandler}>
+                 { errr }
                     <div>
                         <input type="text" placeholder="Enter pharmacy name" onChange={this.changeHandler} />
                         <button type="submit" >Search</button>
@@ -96,12 +98,11 @@ class Search extends Component {
                             
                             <br></br>
                             <div className="row">
-                                <div className="col-6">
+                                <div className="col-4">
                                 <img src={pharmacy.imageSrc} className="card-img-top"/>
                                 </div>
                                 <div className="col-2">
                                     <p>Address          </p>
-                                    <br></br>
                                     <p>District         </p>
                                     <p>TeleNo           </p>
                                     <p>Email            </p>
@@ -119,9 +120,6 @@ class Search extends Component {
                             <div className="row">
                             <div className="col-3">
                             <Link to = "/upload" ><button type="submit" className="btn btn-dark" >Place an order</button></Link>
-                            </div>
-                            <div className="col-3">
-                            <button type="submit" className="btn btn-dark" >Search drugs</button>
                             </div>
                             </div>
                             <br></br>

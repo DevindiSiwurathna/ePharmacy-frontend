@@ -1,27 +1,34 @@
 import React, { useState, useEffect } from 'react'
 
+
 const defaultImageSrc = '/img/default-user-image.png'
 
 const initialFieldValues = {
-    employeeID: 0,
-    RegNo:'',
-    Pharmacyname: '',
-    Address: '',
-    District:'',
-    Email:'',
-    TeleNo:'',
-    Password:'',
-    Pharmacyimagename: '',
-    ImageSrc: defaultImageSrc,
-    Pharmacyimagefile: null
+    id: 0,
+    regNo:'',
+    pharmacyname: '',
+    address: '',
+    district:'',
+    email:'',
+    teleNo:'',
+    password:'',
+    pharmacyimagename: '',
+    imageSrc: defaultImageSrc,
+    pharmacyimagefile: null
 }
 
-export default function Pharmacy(props) {
+export default function Pharmacyaccountedit(props) {
 
     const { addOrEdit, recordForEdit } = props
 
     const [values, setValues] = useState(initialFieldValues)
     const [errors, setErrors] = useState({})
+
+    useEffect(() => {
+        if (recordForEdit != null)
+            setValues(recordForEdit);
+            //console.log(values)
+    }, [recordForEdit])
 
     const handleInputChange = e => {
         const { name, value } = e.target;
@@ -33,36 +40,36 @@ export default function Pharmacy(props) {
 
     const showPreview = e => {
         if (e.target.files && e.target.files[0]) {
-            let Pharmacyimagefile = e.target.files[0];
+            let pharmacyimagefile = e.target.files[0];
             const reader = new FileReader();
             reader.onload = x => {
                 setValues({
                     ...values,
-                    Pharmacyimagefile,
-                    ImageSrc: x.target.result
+                    pharmacyimagefile,
+                    imageSrc: x.target.result
                 })
             }
-            reader.readAsDataURL(Pharmacyimagefile)
+            reader.readAsDataURL(pharmacyimagefile)
         }
         else {
             setValues({
                 ...values,
-                Pharmacyimagefile: null,
-                ImageSrc: defaultImageSrc
+                pharmacyimagefile: null,
+                imageSrc: defaultImageSrc
             })
         }
     }
 
     const validate = () => {
         let temp = {}
-        temp.RegNo = values.RegNo=== "" ? false : true;
-        temp.Pharmacyname = values.Pharmacyname === "" ? false : true;
-        temp.Address = values.Address === "" ? false : true;
-        temp.District = values.District=== "" ? false : true;
-        temp.Email = values.Email=== "" ? false : true;
-        temp.TeleNo = values.TeleNo=== "" ? false : true;
-        temp.Password = values.Password=== "" ? false : true;
-        temp.imageSrc = values.ImageSrc === defaultImageSrc ? false : true;
+        temp.regNo = values.regNo=== "" ? false : true;
+        temp.pharmacyname = values.pharmacyname === "" ? false : true;
+        temp.address = values.address === "" ? false : true;
+        temp.district = values.district=== "" ? false : true;
+        temp.email = values.email=== "" ? false : true;
+        temp.teleNo = values.teleNo=== "" ? false : true;
+        temp.password = values.password=== "" ? false : true;
+        temp.imageSrc = values.imageSrc === defaultImageSrc ? false : true;
         setErrors(temp)
         return Object.values(temp).every(x => x === true)
     }
@@ -77,16 +84,16 @@ export default function Pharmacy(props) {
         e.preventDefault()
         if (validate()) {
             const formData = new FormData()
-            formData.append('employeeID', values.employeeID)
-            formData.append('RegNo', values.RegNo)
-            formData.append('Pharmacyname', values.Pharmacyname)
-            formData.append('Address', values.Address)
-            formData.append('District', values.District)
-            formData.append('Email', values.Email)
-            formData.append('TeleNo', values.TeleNo)
-            formData.append('Password', values.Password)
-            formData.append('Pharmacyimagename', values.Pharmacyimagename)
-            formData.append('Pharmacyimagefile', values.Pharmacyimagefile)
+            formData.append('id', values.id)
+            formData.append('regNo', values.regNo)
+            formData.append('pharmacyname', values.pharmacyname)
+            formData.append('address', values.address)
+            formData.append('district', values.district)
+            formData.append('email', values.email)
+            formData.append('teleNo', values.teleNo)
+            formData.append('password', values.password)
+            formData.append('pharmacyimagename', values.pharmacyimagename)
+            formData.append('pharmacyimagefile', values.pharmacyimagefile)
             addOrEdit(formData, resetForm)
         }
     }
@@ -95,16 +102,15 @@ export default function Pharmacy(props) {
 
     return (
         <>
-            
             <div className="outer">
             <div className="inner3"> 
             <form autoComplete="off" noValidate onSubmit={handleFormSubmit}>
                 <div className="card">
-                    <br></br>
-                    <h3> Pharmacy Registration</h3>
+                <br></br>
+                    <h3> Edit Profile</h3>
                     <br></br>
                     <label>Select a profile picture</label>
-                    <img src={values.ImageSrc} className="card-img-top" />
+                    <img src={values.imageSrc} className="card-img-top" />
                     <div className="card-body">
                         <div className="form-group">
                             <input type="file" accept="image/*" className={"form-control-file" + applyErrorClass('ImageSrc')}
@@ -112,53 +118,50 @@ export default function Pharmacy(props) {
                         </div>
                         <div className="form-group">
                         <label>Register No</label>
-                            <input className={"form-control" + applyErrorClass('RegNo')} placeholder="Enter register No" name="RegNo"
-                                value={values.RegNo}
+                            <input className={"form-control" + applyErrorClass('regNo')} placeholder="Enter register No" name="regNo"
+                                value={values.regNo}
                                 onChange={handleInputChange} />
                         </div>
                         <div className="form-group">
                         <label>Pharmacy name</label>
-                            <input className={"form-control" + applyErrorClass('Pharmacyname')} placeholder="Enter pharmacy name" name="Pharmacyname"
-                                value={values.Pharmacyname}
+                            <input className={"form-control" + applyErrorClass('pharmacyname')} placeholder="Enter pharmacy name" name="pharmacyname"
+                                value={values.pharmacyname}
                                 onChange={handleInputChange} />
                         </div>
                         <div className="form-group">
                         <label>Address</label>
-                            <input className={"form-control" + applyErrorClass('Address')} placeholder="Enter address" name="Address"
-                                value={values.Address}
+                            <input className={"form-control" + applyErrorClass('address')} placeholder="Enter address" name="address"
+                                value={values.address}
                                 onChange={handleInputChange} />
                         </div>
                         <div className="form-group">
                         <label>District</label>
-                            <input className={"form-control" + applyErrorClass('District')} placeholder="Enter district" name="District"
-                                value={values.District}
+                            <input className={"form-control" + applyErrorClass('district')} placeholder="Enter district" name="district"
+                                value={values.district}
                                 onChange={handleInputChange} />
                         </div>
                         <div className="form-group">
                         <label>Email</label>
-                            <input className={"form-control" + applyErrorClass('Email')} placeholder="Enter email" name="Email"
-                                value={values.Email}
+                            <input className={"form-control" + applyErrorClass('email')} placeholder="Enter email" name="email"
+                                value={values.email}
                                 onChange={handleInputChange} />
                         </div>
                         <div className="form-group">
                         <label>TeleNo</label>
-                            <input className={"form-control" + applyErrorClass('TeleNo')} placeholder="Enter teleno" name="TeleNo"
-                                value={values.TeleNo}
+                            <input className={"form-control" + applyErrorClass('teleNo')} placeholder="Enter teleno" name="teleNo"
+                                value={values.teleNo}
                                 onChange={handleInputChange} />
                         </div>
                         <div className="form-group">
                         <label>Password</label>
-                            <input type="password" className={"form-control" + applyErrorClass('Password')} placeholder="Enter password" name="Password"
-                                value={values.Password}
+                            <input className={"form-control" + applyErrorClass('password')} placeholder="Enter password" name="password"
+                                value={values.password}
                                 onChange={handleInputChange} />
                         </div>
                         
                         <div className="form-group text-center">
-                            <button type="submit"  className="btn btn-dark btn-lg btn-block">Register</button>
+                            <button type="submit"  className="btn btn-dark btn-lg btn-block">Edit</button>
                         </div>
-                        <p className="forgot-password text-right">
-                            Already registered <a href="#">log in?</a>
-                        </p>
                     </div>
                 </div>
             </form>

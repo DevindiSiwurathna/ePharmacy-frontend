@@ -21,6 +21,7 @@ export default function  PharmacyList() {
             onSuccess();
         })
         .catch(err => console.log(err))
+        
     }
 
 

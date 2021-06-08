@@ -11,6 +11,8 @@ import SignUpaspharmacy from "./components/pharmacyaccount";
 import District from './components/district.component';
 import Upload from './components/upload.component';
 import Pharmacy from "./components/pharmacy.component";
+import Phedit from "./components/Phedit";
+import editcustomer from "./components/customeredit.component";
 import Services from "./components/services.component";
 import Details from './components/services/Details';
 import Cart from './components/services/Cart';
@@ -25,18 +27,55 @@ import Search from "./components/Search";
 //import Addproduct from "./components/Addproduct";
 import ProductList from "./components/ProductList";
 
-
+import axios from 'axios';
 
 export default class App extends Component {
 
-  state = {
+ 
+      state = {
 
-    userrole : '',
-    userid   : ''
+        userrole : '',
+        userid   : '',
+        isloggedin : 'no',
+        msg : ''
 
-  };
+    };
 
-componentDidMount() {
+    buttonHandler = e => {
+
+      localStorage.clear()
+      this.setState( {
+        isloggedin : 'no'
+      })
+    }
+
+    submitHandler = e => {
+      e.preventDefault()
+
+      const logingdata ={
+          email : this .Email,
+          password: this .Password
+      }
+
+         axios
+         .post('/api/UserLogin', logingdata)
+
+         .then(response => {
+             console.log(response); //to print response in console in developper tool 
+             localStorage.setItem('login', response.data.token);
+             this.setState( { isloggedin : 'yes'});
+             
+         })
+         .catch(error => {
+             console.log(error)
+             this.setState({
+                 msg : 'Invalid Email/Password' 
+             })
+         })
+  }
+
+
+/*componentWillMount() {
 
   if(localStorage.login)
   {
@@ -45,11 +84,26 @@ componentDidMount() {
     this.setState( {userid: currentuser.id });
   }
 
-}
+}*/
 
 render() {
 
-if(this.state.userrole === "Customer"){
+  let errr ='';
+
+  if (this.state.msg){
+
+      errr =(
+          <div className="alert alert-danger" role="alert" >
+              {this.state.msg}
+          </div>
+      )
+  }
+
+if(this.state.isloggedin==="yes") {
+
+  const currentuser     = JSON.parse(atob(localStorage.login.split(".")[1])); 
+
+if(currentuser.role  === "Customer"){
   return (<Router>
     <GlobalStyle/>
     <div className="App">
@@ -60,6 +114,9 @@ if(this.state.userrole === "Customer"){
             <ul className="navbar-nav ml-auto">
                 <li className="nav-item"> 
                 <Link className="nav-link" to={"/"}>Home</Link>
+                </li>
+                <li className="nav-item">
+                <Link className="nav-link" to={"/edit-profile"}>Edit Profile</Link>
                 </li>
                 <li className="nav-item">
                 <Link className="nav-link" to={"/search"}>Search Pharmacy</Link>
@@ -80,7 +137,7 @@ if(this.state.userrole === "Customer"){
                 </ButtonContainer>
               </Link>
               </li>
-              <button type="submit" className="btn btn-dark btn-sm" onClick={() => localStorage.clear()}>Logout</button>
+              <button type="submit" className="btn btn-dark btn-sm" onClick={this.buttonHandler}>Logout</button>
               
             </ul>
           </div>
@@ -94,6 +151,7 @@ if(this.state.userrole === "Customer"){
             <Route path="/upload" component={Upload} />
             <Route path = "/services" component={Services}/>
             <Route path = "/Cart" component={Cart}/>
+            <Route path = "/edit-profile" component={editcustomer}/>
             <Route path = "/Details" component={Details}/>
             <Route path="/terms" component={terms} />
             <Route path="/working" component={working} />
@@ -112,7 +170,7 @@ if(this.state.userrole === "Customer"){
   );
 }
 
-else if(this.state.userrole === "Pharmacy"){
+else if(currentuser.role  === "Pharmacy"){
 
   return (<Router>
     <GlobalStyle/>
@@ -126,12 +184,15 @@ else if(this.state.userrole === "Pharmacy"){
                 <Link className="nav-link" to={"/"}>Home</Link>
                 </li>
                 <li className="nav-item">
+                <Link className="nav-link" to={"/edit-pharmacy-account"}>Edit Account</Link>
+                </li>
+                <li className="nav-item">
                 <Link className="nav-link" to={"/search"}>Search Pharmacy</Link>
                 </li>
                 <li className="nav-item">
                 <Link className="nav-link" to = {"/services"}>Services</Link>
                 </li>
-              <button type="submit" className="btn btn-dark btn-sm" onClick={() => localStorage.clear()}>Logout</button>
+              <button type="submit" className="btn btn-dark btn-sm" onClick={this.buttonHandler}>Logout</button>
               
             </ul>
           </div>
@@ -143,6 +204,7 @@ else if(this.state.userrole === "Pharmacy"){
             <Route path = "/services" component={Services}/>
             <Route path="/terms" component={terms} />
             <Route path="/working" component={working} />
+            <Route path = "/edit-pharmacy-account" component={Phedit}/>
             <Route path="/sendmessage" component={sendmessage} />
             <Route path="/messagesuccess" component={messagesuccess} />
             <Route path="/search" component={Search} />
@@ -158,7 +220,7 @@ else if(this.state.userrole === "Pharmacy"){
   );
 
 
-}
+}}
 
 else {
 
@@ -170,9 +232,6 @@ else {
           <Link className="navbar-brand">ORDER YOUR HEALTH & WELLNESS PRODUCTS ONLINE TODAY!</Link>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <Link className="nav-link" to={"/sign-in"}>Sign in</Link>
-              </li>
               <li className="nav-item">
                 <Link className="nav-link" to={"/sign-up-as-customer"}>Sign up as customer</Link>
               </li>
@@ -190,12 +249,44 @@ else {
           </div>
         </div>
       </nav>
+            <div className="outer">
+            <div className="inner"> 
+            <form onSubmit={ this.submitHandler}>
+            { errr }
+
+                <h3>Log in</h3>
+
+                <div className="form-group">
+                    <label>Email</label>
+                    <input type="text" className="form-control" placeholder="Enter email" onChange ={ e => this.Email = e.target.value} />
+                </div>
+
+                <div className="form-group">
+                    <label>Password</label>
+                    <input type="text" className="form-control" placeholder="Enter password" onChange ={ e => this.Password = e.target.value} />
+                </div>
+
+                <div className="form-group">
+                    <div className="custom-control custom-checkbox">
+                        <input type="checkbox" className="custom-control-input" id="customCheck1" />
+                        <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
+                    </div>
+                </div>
+                 
+                
+                
+                <br></br>
+                <button type="submit" className="btn btn-dark btn-lg btn-block">Sign in</button>
+                {/*<p className="forgot-password text-right">
+                    Forgot <Link to= "/Forgotpassword" >password?</Link>
+                </p>*/}
+            </form>
+            </div>
+            </div>
       <Switch> <Route exact path='/' exact component={Home} /></Switch> 
                        
             <Switch>
-        
-          
-            <Route path="/sign-in" component={Login} />
+      
             <Route path="/sign-up-as-customer" component={SignUpascustomer} />
             <Route path="/sign-up-as-pharmacy" component={Ph} />
             <Route path = "/pharmacy" component={Pharmacy}/>
@@ -211,6 +302,8 @@ else {
         </div>
       
     </Router>
+
+        
   );
 
 
@@ -219,3 +312,4 @@ else {
 
 }
 }
+
