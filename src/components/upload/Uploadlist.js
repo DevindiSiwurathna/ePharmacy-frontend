@@ -4,7 +4,7 @@ import axios from "axios";
 import { Link, withRouter } from "react-router-dom";
 import { useLocation, useParams } from 'react-router';
 
-export default function Uploadlist({custid}) {
+export default function Uploadlist({custid,custname}) {
 
     
     //let url = new URL()
@@ -24,7 +24,7 @@ export default function Uploadlist({custid}) {
 
     //const custid = this.props.custid;
     console.log({custid});
-
+    console.log(custname);
     
     //console.log(props.match.params);
 
@@ -57,6 +57,7 @@ export default function Uploadlist({custid}) {
                     addOrEdit = {addOrEdit}
                     myphmcy = {myphmcy}
                     custid = {custid}
+                    custname = {custname}
                 />
                 </div> 
                 <div className="col-md-1">

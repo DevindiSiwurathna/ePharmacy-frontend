@@ -105,8 +105,7 @@ console.log(custid);
                   </Link>)}
                   {order.complete ?(
                   <Link
-                    class="btn btn-info"
-                    
+                    class="btn btn-info" 
                   >
                     Pay 
                   </Link>):null}
