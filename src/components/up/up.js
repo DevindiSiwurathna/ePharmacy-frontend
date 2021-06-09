@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import './Upload.css';
 
-import  myphmcy from './Uploadlist';
+//import  myphmcy from './Uploadlist';
 
 //const myphmcy = JSON.stringify(phmcy);
 //console.log(myphmcy);
@@ -29,7 +29,7 @@ const initialFieldValues ={
 }
 
 
-export default function Upload(props) {
+export default function Up(props) {
 
     const {addOrEdit} = props
 

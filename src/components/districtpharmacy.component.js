@@ -3,6 +3,8 @@ import React,{ Component } from 'react';
 import { Link } from "react-router-dom";
 import './district.css';
 //import Upload from "./upload.component";
+
+
 class Districtpharmacy extends React.Component{
     state = {
         pharmacy: [],
@@ -15,7 +17,9 @@ class Districtpharmacy extends React.Component{
             .then(response => response.json())
             .then(pharmacy => this.setState({pharmacy: pharmacy}));
             //console.log(this.state)
-        }      
+        }    
+        
+         //applyErrorClass = field => ((field in errors && errors[field] == false) ? ' invalid-field' : '')
 
 render(){
    //console.log(this.state)
@@ -24,7 +28,7 @@ render(){
     return(
         <div>
         <label class="label" for="district"><span>{this.props.district}</span></label>
-        <select name="phmcy" className="form-control select-dropdown" ><option value="">Select Pharmacy</option>{pharm}</select>
+        <select name="phmcy" className={"form-control select-dropdown"} ><option value="">Select Pharmacy</option>{pharm}</select>
         
         </div>
     )

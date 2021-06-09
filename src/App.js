@@ -29,6 +29,9 @@ import Order from './components/orders/order';
 import Customer from "./components/customer";
 //import CustomerService from "./components/customerservice";
 import Username from "./components/username";
+import EditOderList from './components/editorderlist';
+import Uplist from './components/up/uplist';
+import Up from './components/up/up';
 
 export default class App extends Component {
 
@@ -118,6 +121,8 @@ if(this.state.userrole === "Customer"){
            {/* <Route path="/Uploadlist" component={props => <UploadList custid={props.match.params.custid}/>}/> */}
             <Route path="/Uploadlist" render={props => (<UploadList custid={this.state.userid} />)}/> 
             <Route path="/username" render = {props => (<Username custid={this.state.userid} />)}/>
+            <Route path="/Uplist/:myphmcy" render={props => (<Uplist custid={this.state.userid} />)}/> 
+            <Route path="/Up" component={Up} />
             <Route path = "/services" component={Services}/>
             <Route path = "/Cart" component={Cart}/>
             <Route path = "/Details" component={Details}/>
@@ -129,6 +134,8 @@ if(this.state.userrole === "Customer"){
             <Route path = "/customer/:custid" render={props => (<Customer custname={this.state.username} />)}/>
             {/*<Route path="/Addproduct" component={Addproduct} />*/}
             <Route path="/ProductList" component={ProductList} />
+            <Route path = "/editorderlist/:orderID" component = {EditOderList}/>
+            
             {/*<Route path="/CustomerService" component={CustomerService} />*/}
         </Switch>
          <Footer/>
