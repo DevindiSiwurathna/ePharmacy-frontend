@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-//import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const Customer = () => {
+const Customer = ({custname}) => {
 //export default function  Customer(props) {
   //const custid = props.custid
 //console.log(custid);
@@ -47,7 +47,8 @@ console.log(custid);
       <div className="py-4">
         {/*{res.map((res)=>(
         <h1>{res.data.customerName}</h1>))}*/}
-        <h2>My Orders</h2>
+        <h1>{custname}'s Orders</h1>
+        <hr/>
         <table class="table border shadow">
           <thead class="thead-dark">
           
@@ -88,7 +89,29 @@ console.log(custid);
               </p>
           </td>
           <td>{order.total}</td>
-                
+          
+          <td>{/*
+          <Link
+                    class="btn btn-outline-primary mr-2"
+                    to={`/editorderlist/${order.orderID}`}
+                  >
+                    Edit
+         </Link>*/} {order.complete ? null:(
+                  <Link
+                    class="btn btn-danger"
+                    onClick={() => deleteOrder(order.orderID)}
+                  >
+                    Delete
+                  </Link>)}
+                  {order.complete ?(
+                  <Link
+                    class="btn btn-info"
+                    
+                  >
+                    Pay 
+                  </Link>):null}
+          </td>
+
               </tr>
             ))}
           </tbody>

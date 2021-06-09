@@ -37,6 +37,7 @@ class Search extends Component {
            .get('https://localhost:44357/api/Pharmacies?field=name&value='+this.state.pharname)
            .then(response => {
                console.log(response)
+               console.log()
                this.setState({pharmacies:response.data})
            })
            .catch(error => {
@@ -55,7 +56,9 @@ class Search extends Component {
             console.log(error)
             this.setState({errorMsg: 'Error retrieving data'}) checked={this.state.searchby==="bydistrict"}
         }) 
+
       }*/
+    
     
     render() {
         const { pharmacies } = this.state
@@ -118,7 +121,7 @@ class Search extends Component {
                             <br></br>
                             <div className="row">
                             <div className="col-3">
-                            <Link to = "/upload" ><button type="submit" className="btn btn-dark" >Place an order</button></Link>
+                            <Link to = {`/uplist/${pharmacy.id}`} ><button type="submit" className="btn btn-dark" >Place an order</button></Link>
                             </div>
                             <div className="col-3">
                             <button type="submit" className="btn btn-dark" >Search drugs</button>

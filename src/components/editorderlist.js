@@ -1,43 +1,79 @@
-import React, {useState, useEffect} from 'react';
-import './Upload.css';
+import React, {useState, useEffect} from 'react'
+import axios from "axios";
+import { Link, withRouter,useHistory,useParams } from "react-router-dom";
+//import { useLocation, useParams } from 'react-router';
 
-import  myphmcy from './Uploadlist';
+    const EditOderList=()=> {
 
-//const myphmcy = JSON.stringify(phmcy);
-//console.log(myphmcy);
-const defaultImageSrc = '/images/7.jpg';
+        let history = useHistory();
+        const {orderID} = useParams();
 
+        /*const [values, setValues] = useState({
+            dateTime:'',
+        status:'',
+        status2:'',
+        pharmacyName:'',
+        customerName:'',
+        patientName:'',
+        patientAge:'',
+        address:'',
+        email:'',
+        teleNo:'',
+        customerId:'',
+        pharmacyId:'',//data obtaind from the URL have to posted as the pharmacyID when posting. 
+        imageName:'',
+        imageSrc:'',
+        imageFile: null
+        })*/
+        const [editOrderList, setEditOrderList] = useState([])
+        const [recordForEdit, setRecordForEdit] = useState(null)
+    const initialFieldValues ={
+        orderID:0, 
+        dateTime:'',
+        status:'',
+        status2:'',
+        pharmacyName:'',
+        customerName:'',
+        patientName:'',
+        patientAge:'',
+        address:'',
+        email:'',
+        teleNo:'',
+        customerId:'',
+        pharmacyId:'',//data obtaind from the URL have to posted as the pharmacyID when posting. 
+        imageName:'',
+        imageSrc:'',
+        imageFile: null
+        
+    }
 
-const initialFieldValues ={
-    orderID:0, 
-    dateTime:'',
-    status:'',
-    status2:'',
-    pharmacyName:'',
-    customerName:'',
-    patientName:'',
-    patientAge:'',
-    address:'',
-    email:'',
-    teleNo:'',
-    customerId:1,
-    pharmacyId:0,//data obtaind from the URL have to posted as the pharmacyID when posting. 
-    imageName:'',
-    imageSrc:'',
-    imageFile: null
     
-}
+    //console.log(props.match.params);
 
+    const ordersAPI= (url='https://localhost:44357/api/Orders') => {
+        return {
+            fetchAll: () => axios.get(url),
+            create: newRecord => axios.post(url, newRecord),
+            update: (id, updateRecord) => axios.put(url + id, updateRecord),
+            delete: id => axios.delete(url+id)
+        }
+    }
+ 
+    const addOrEdit = (formData, onSuccess) => {
 
-export default function Upload(props) {
+        ordersAPI().update(formData.get('orderID'),formData)
+        .then(res => {
+            onSuccess();
+            refreshEditOrderList();
+        })
+        .catch(err => console.log(err.response.data))
+    }
 
-    const {addOrEdit} = props
+    const showRecordDetails = data =>{
+        setRecordForEdit(data)
+    }
 
-    const {myphmcy} = props
-    const {custid} = props
-    console.log(custid);
-     console.log(myphmcy);
-    const [values, setValues] = useState(initialFieldValues)
+   const [values, setValues] = useState(initialFieldValues)
     const[errors, setErrors] = useState({})
 
     const handleInputChange= e => {
@@ -48,15 +84,29 @@ export default function Upload(props) {
         })
         
     }
+    useEffect(()=> {
+        if (recordForEdit != null)
+            setValues(recordForEdit);
+    },[recordForEdit])
 
-    /*const addOrEdit = (formData, onSuccess) => {
+    useEffect(()=>{
+        refreshEditOrderList();
+    },[])
 
-        ordersAPI().create(formData)
-        .then(res => {
-            onSuccess();
+    /*const loadValue = async () => {
+        const result = await axios.get(`http://localhost:44357/api/Orders/${orderID}`);
+        setValues(result.data);
+        console.log(result);
+    };*/
+
+    function refreshEditOrderList(){
+        ordersAPI().fetchAll()
+        .then(res=> {
+            setEditOrderList(res.data)
         })
-        .catch(err => console.log(err.response.data))
-    }*/
+        .catch(err => console.log(err))
+    }
+   
 
     const showPreview = e => {
         if(e.target.files && e.target.files[0]){
@@ -87,14 +137,6 @@ export default function Upload(props) {
     const validate = () => {
         let temp = {}
         temp.customerName = values.customerName == "" ? false : true;
-        temp.status = values.status == "" ? false : true;
-        temp.status2 = values.status2 == "" ? false : true;
-        temp.pharmacyName = values.pharmacyName == "" ? false : true;
-        temp.patientName = values.patientName == "" ? false : true;
-        temp.patientAge = values.patientAge == "" ? false : true;
-        temp.address= values.address == "" ? false : true;
-        temp.email = values.email == "" ? false : true;
-        temp.teleNo = values.teleNo == "" ? false : true;
         setErrors(temp)
         return Object.values(temp).every(x => x == true)
     }
@@ -121,8 +163,8 @@ export default function Upload(props) {
         formData.append('address',values.address)
         formData.append('email',values.email)
         formData.append('teleNo',values.teleNo)
-        formData.append('customerId',custid)
-        formData.append('pharmacyId',myphmcy)
+        formData.append('customerId',values.customerId)
+        formData.append('pharmacyId',values.pharmacyId)
         formData.append('imageName',values.imageName)
         formData.append('imageFile',values.imageFile)
         addOrEdit(formData, resetForm) 
@@ -132,9 +174,6 @@ export default function Upload(props) {
 }
 
 const applyErrorClass = field => ((field in errors && errors[field] == false) ? ' invalid-field' : '')
-
-
-    
 
     return (
         <>
@@ -158,15 +197,15 @@ const applyErrorClass = field => ((field in errors && errors[field] == false) ? 
                     </div>
 
                     <div className="form-group">
-                        <input className={"form-control" + applyErrorClass('status')}placeholder="Enter the prescription items and qty" name="status" value={values.status} onChange={ handleInputChange}/>
+                        <input className="form-control" placeholder="Enter the prescription items and qty" name="status" value={values.status} onChange={ handleInputChange}/>
                     </div>
 
                     <div className="form-group">
-                        <input className={"form-control"+ applyErrorClass('status2')} placeholder="What are the symptoms?" name="status2" value={values.status2} onChange={ handleInputChange}/>
+                        <input className="form-control" placeholder="What are the symptoms?" name="status2" value={values.status2} onChange={ handleInputChange}/>
                     </div>
 
                     <div className="form-group">
-                        <input className={"form-control"+ applyErrorClass('pharmacyName')} placeholder="Pharmacy Name" name="pharmacyName" value={values.pharmacyName} onChange={ handleInputChange}/>
+                        <input className="form-control" placeholder="Pharmacy Name" name="pharmacyName" value={values.pharmacyName} onChange={ handleInputChange}/>
                     </div>
 
                     <div className="form-group">
@@ -174,23 +213,23 @@ const applyErrorClass = field => ((field in errors && errors[field] == false) ? 
                     </div>
 
                     <div className="form-group">
-                        <input className={"form-control"+ applyErrorClass('patientName')} placeholder="Patient Name" name="patientName" value={values.patientName} onChange={ handleInputChange}/>
+                        <input className="form-control" placeholder="Patient Name" name="patientName" value={values.patientName} onChange={ handleInputChange}/>
                     </div>
 
                     <div className="form-group">
-                        <input className={"form-control"+ applyErrorClass('patientAge')} placeholder="Patient Age" name="patientAge" value={values.patientAge} onChange={ handleInputChange}/>
+                        <input className="form-control" placeholder="Patient Age" name="patientAge" value={values.patientAge} onChange={ handleInputChange}/>
                     </div>
 
                     <div className="form-group">
-                        <input className={"form-control"+ applyErrorClass('address')} placeholder="Delivery address" name="address" value={values.address} onChange={ handleInputChange}/>
+                        <input className="form-control" placeholder="Delivery address" name="address" value={values.address} onChange={ handleInputChange}/>
                     </div>
 
                     <div className="form-group">
-                        <input className={"form-control" + applyErrorClass('email')}placeholder="Your Email" name="email" value={values.email} onChange={ handleInputChange}/>
+                        <input className="form-control" placeholder="Your Email" name="email" value={values.email} onChange={ handleInputChange}/>
                     </div>
 
                     <div className="form-group">
-                        <input className={"form-control"+ applyErrorClass('teleNo')} placeholder="Contact Number" name="teleNo" value={values.teleNo} onChange={ handleInputChange}/>
+                        <input className="form-control" placeholder="Contact Number" name="teleNo" value={values.teleNo} onChange={ handleInputChange}/>
                     </div>
 
                     <div className="form-group text-center">
@@ -203,5 +242,7 @@ const applyErrorClass = field => ((field in errors && errors[field] == false) ? 
             </div>
         </form>
     </>
-    )
-}
+    );
+};
+
+export default EditOderList;
