@@ -32,6 +32,11 @@ import Username from "./components/username";
 import EditOderList from './components/editorderlist';
 import Uplist from './components/up/uplist';
 import Up from './components/up/up';
+import Chatbot from 'react-chatbot-kit';
+import ActionProvider from './components/chatbot/ActionProvider';
+import MessageParser from './components/chatbot/MessageParser';
+import config from './components/chatbot/config';
+import Draggable from 'react-draggable'; // The default
 
 export default class App extends Component {
 
@@ -39,7 +44,9 @@ export default class App extends Component {
 
     userrole : '',
     userid   : '',
-    username : ''
+    username : '',
+    usermail : '',
+    usertele : ''
 
   };
 
@@ -51,6 +58,8 @@ componentDidMount() {
     this.setState( {userrole: currentuser.role });
     this.setState( {userid: currentuser.id });
     this.setState( {username: currentuser.name });
+    this.setState( {usermail: currentuser.mail });
+    this.setState( {usertele: currentuser.tele });
  }
 
 }
@@ -63,6 +72,8 @@ render() {
 if(this.state.userrole === "Customer"){
   {/*<Customer custid={this.state.userid} />*/}
   console.log(this.state.username);
+  console.log(this.state.usermail);
+  console.log(this.state.usertele);
   const custname=this.state.username;
   const custid=this.state.userid;
   console.log(custid);
@@ -119,7 +130,7 @@ if(this.state.userrole === "Customer"){
             {/*<Route path="/Uploadlist" component={UploadList} />*/}
             {/*<Route path="/Uploadlist" render={props => <UploadList {...props.match.params} />}/>*/}
            {/* <Route path="/Uploadlist" component={props => <UploadList custid={props.match.params.custid}/>}/> */}
-            <Route path="/Uploadlist" render={props => (<UploadList custid={this.state.userid} />)}/> 
+            <Route path="/Uploadlist" render={props => (<UploadList custid={this.state.userid} custname={this.state.username}/>)}/> 
             <Route path="/username" render = {props => (<Username custid={this.state.userid} />)}/>
             <Route path="/Uplist/:myphmcy" render={props => (<Uplist custid={this.state.userid} />)}/> 
             <Route path="/Up" component={Up} />
@@ -137,7 +148,17 @@ if(this.state.userrole === "Customer"){
             <Route path = "/editorderlist/:orderID" component = {EditOderList}/>
             
             {/*<Route path="/CustomerService" component={CustomerService} />*/}
+
+            
         </Switch>
+
+        <Draggable>
+        <div>
+        <Chatbot 
+        config={config} actionProvider={ActionProvider} messageParser={MessageParser}/>
+        </div>
+        </Draggable>
+
          <Footer/>
         </div>
       
@@ -192,6 +213,12 @@ else if(this.state.userrole === "Pharmacy"){
             <Route path="/ProductList" component={ProductList} />
 
         </Switch>
+        <Draggable>
+        <div>
+        <Chatbot 
+        config={config} actionProvider={ActionProvider} messageParser={MessageParser}/>
+        </div>
+        </Draggable>
          <Footer/>
         </div>
       
@@ -248,6 +275,12 @@ else {
             {/*<Route path="/Addproduct" component={Addproduct} />*/}
 
         </Switch>
+        <Draggable>
+        <div>
+        <Chatbot 
+        config={config} actionProvider={ActionProvider} messageParser={MessageParser}/>
+        </div>
+        </Draggable>
          <Footer/>
         </div>
       

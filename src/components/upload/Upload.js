@@ -35,6 +35,8 @@ export default function Upload(props) {
 
     const {myphmcy} = props
     const {custid} = props
+    const {custname} = props
+
     console.log(custid);
      console.log(myphmcy);
     const [values, setValues] = useState(initialFieldValues)
@@ -115,7 +117,7 @@ export default function Upload(props) {
         formData.append('status',values.status)
         formData.append('status2',values.status2)
         formData.append('pharmacyName',values.pharmacyName)
-        formData.append('customerName',values.customerName)
+        formData.append('customerName',custname)
         formData.append('patientName',values.patientName)
         formData.append('patientAge',values.patientAge)
         formData.append('address',values.address)
@@ -170,7 +172,7 @@ const applyErrorClass = field => ((field in errors && errors[field] == false) ? 
                     </div>
 
                     <div className="form-group">
-                        <input className={"form-control" + applyErrorClass('customerName')}  placeholder="Your Name" name="customerName" value={values.customerName} onChange={ handleInputChange}/>
+                        <input className={"form-control" + applyErrorClass('customerName')}  placeholder="Your Name" name="customerName" value={custname} onChange={ handleInputChange}/>
                     </div>
 
                     <div className="form-group">
