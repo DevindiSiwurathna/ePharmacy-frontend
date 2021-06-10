@@ -155,12 +155,7 @@ if(this.state.userrole === "Customer"){
             
         </Switch>
 
-        <Draggable>
-        <div>
-        <Chatbot 
-        config={config} actionProvider={ActionProvider} messageParser={MessageParser}/>
-        </div>
-        </Draggable>
+        
 
          <Footer/>
         </div>
@@ -218,12 +213,7 @@ else if(this.state.userrole === "Pharmacy"){
             <Route path="/ProductList" component={ProductList} />
 
         </Switch>
-        <Draggable>
-        <div>
-        <Chatbot 
-        config={config} actionProvider={ActionProvider} messageParser={MessageParser}/>
-        </div>
-        </Draggable>
+        
          <Footer/>
         </div>
       
@@ -280,12 +270,7 @@ else {
             {/*<Route path="/Addproduct" component={Addproduct} />*/}
 
         </Switch>
-        <Draggable>
-        <div>
-        <Chatbot 
-        config={config} actionProvider={ActionProvider} messageParser={MessageParser}/>
-        </div>
-        </Draggable>
+        
          <Footer/>
         </div>
       
