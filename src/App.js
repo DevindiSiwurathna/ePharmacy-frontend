@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import GlobalStyle from './globalStyles';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
@@ -33,6 +32,8 @@ import Edit from './components/edit';
 import Uplist from './components/up/uplist';
 import Up from './components/up/up';
 import Chatbot from 'react-chatbot-kit';
+import Phedit from "./components/Phedit";
+import editcustomer from "./components/customeredit.component";
 import ActionProvider from './components/chatbot/ActionProvider';
 import MessageParser from './components/chatbot/MessageParser';
 import config from './components/chatbot/config';
@@ -46,11 +47,26 @@ export default class App extends Component {
     userid   : '',
     username : '',
     usermail : '',
-    usertele : ''
+    usertele : '',
+    islogged : ''
+
 
   };
 
-componentDidMount() {
+  putlogged = () =>{
+  
+    this.setState( {islogged: 'true' });
+  
+  };
+  
+  changeHandler = () => {
+
+    localStorage.clear();
+    this.setState( {islogged: 'null' });
+    
+  }
+
+componentWillMount() {
 
   if(localStorage.login)
   {
@@ -60,8 +76,14 @@ componentDidMount() {
     this.setState( {username: currentuser.name });
     this.setState( {usermail: currentuser.mail });
     this.setState( {usertele: currentuser.tele });
-
+    this.setState( { islogged: 'true'});
     
+ }
+
+ else{
+   
+  this.setState( { islogged: 'null'});
+
  }
 
 }
@@ -71,11 +93,15 @@ componentDidMount() {
 
 render() {
 
-if(this.state.userrole === "Customer"){
+if (localStorage.login && this.state.islogged === "true"){
+
+  const currentuser     = JSON.parse(atob(localStorage.login.split(".")[1])); 
+
+if( currentuser.role === "Customer"){
   {/*<Customer custid={this.state.userid} />*/}
-  console.log(this.state.username);
-  console.log(this.state.usermail);
-  console.log(this.state.usertele);
+  console.log(currentuser.name);
+  console.log(currentuser.mail);
+  console.log(currentuser.tele);
   const custmail=this.state.usermail;
   const custid=this.state.userid;
   console.log(custid);
@@ -91,6 +117,9 @@ if(this.state.userrole === "Customer"){
             <ul className="navbar-nav ml-auto">
                 <li className="nav-item"> 
                 <Link className="nav-link" to={"/"}>Home</Link>
+                </li>
+                <li className="nav-item">
+                <Link className="nav-link" to={"/edit-profile"}>Edit Profile</Link>
                 </li>
                 <li className="nav-item">
                 <Link className="nav-link" to={"/search"}>Search Pharmacy</Link>
@@ -116,8 +145,8 @@ if(this.state.userrole === "Customer"){
               </li>
 
               <li className="nav-item">
-              Hi! {this.state.username}
-              <button type="submit" className="btn btn-dark btn-sm" onClick={() => localStorage.clear()}>Logout</button>
+              Hi! {currentuser.name}
+              <button type="submit" className="btn btn-dark btn-sm" onClick={this.changeHandler}>Logout</button>
               {/*<Username/>*/}
               </li>
             </ul>
@@ -138,6 +167,7 @@ if(this.state.userrole === "Customer"){
             <Route path="/Uplist/:myphmcy" render={props => (<Uplist custid={this.state.userid} />)}/> 
             <Route path="/Up" component={Up} />
             <Route path = "/services" component={Services}/>
+            <Route path = "/edit-profile" component={editcustomer}/>
             <Route path = "/Cart" component={Cart}/>
             <Route path = "/Details" component={Details}/>
             <Route path="/terms" component={terms} />
@@ -169,7 +199,7 @@ if(this.state.userrole === "Customer"){
   );
 }
 
-else if(this.state.userrole === "Pharmacy"){
+else if(currentuser.role === "Pharmacy"){
 
   const phmid=this.state.userid;
   console.log(phmid);
@@ -187,6 +217,9 @@ else if(this.state.userrole === "Pharmacy"){
                 <Link className="nav-link" to={"/"}>Home</Link>
                 </li>
                 <li className="nav-item">
+                <Link className="nav-link" to={"/edit-pharmacy-account"}>Edit Account</Link>
+                </li>
+                <li className="nav-item">
                 <Link className="nav-link" to={"/search"}>Search Pharmacy</Link>
                 </li>
                 <li className="nav-item">
@@ -196,8 +229,8 @@ else if(this.state.userrole === "Pharmacy"){
                 <Link className="nav-link" to={`/pharmacy/${phmid}`}>pharmacy</Link>
                 </li>
                 <li className="nav-item">
-              Hi! {this.state.username}
-              <button type="submit" className="btn btn-dark btn-sm" onClick={() => localStorage.clear() } >Logout</button>
+              Hi! {currentuser.name}
+              <button type="submit" className="btn btn-dark btn-sm" onClick={ this.changeHandler } >Logout</button>
               </li>
             </ul>
           </div>
@@ -209,6 +242,7 @@ else if(this.state.userrole === "Pharmacy"){
             <Route path = "/services" component={Services}/>
             <Route path="/terms" component={terms} />
             <Route path="/working" component={working} />
+            <Route path = "/edit-pharmacy-account" component={Phedit}/>
             <Route path="/sendmessage" component={sendmessage} />
             <Route path="/messagesuccess" component={messagesuccess} />
             <Route path="/search" component={Search} />
@@ -231,9 +265,9 @@ else if(this.state.userrole === "Pharmacy"){
   );
 
 
-}
+}}
 
-else {
+else if (this.state.islogged==="null") {
 
   return (<Router>
     <GlobalStyle/>
@@ -268,7 +302,7 @@ else {
             <Switch>
         
           
-            <Route path="/sign-in" component={Login} />
+            <Route path="/sign-in" component={() => <Login putlogged={this.putlogged}/>} />
             <Route path="/sign-up-as-customer" component={SignUpascustomer} />
             <Route path="/sign-up-as-pharmacy" component={Ph} />
             <Route path = "/pharmacy" component={Pharmacy}/>
@@ -298,3 +332,5 @@ else {
 
 }
 }
+
+

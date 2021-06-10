@@ -73,6 +73,7 @@ export default class Login extends Component {
               console.log(this.Email);{
                   const loginmail=logingdata.email
                   console.log(loginmail);
+                  this.props.putlogged();
               }
                
            })
