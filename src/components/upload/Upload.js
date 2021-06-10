@@ -36,6 +36,8 @@ export default function Upload(props) {
     const {myphmcy} = props
     const {custid} = props
     const {custname} = props
+    const {custmail} = props
+    const {custtele} = props
 
     console.log(custid);
      console.log(myphmcy);
@@ -88,15 +90,15 @@ export default function Upload(props) {
 
     const validate = () => {
         let temp = {}
-        temp.customerName = values.customerName == "" ? false : true;
+       // temp.customerName = values.customerName == "" ? false : true;
         temp.status = values.status == "" ? false : true;
         temp.status2 = values.status2 == "" ? false : true;
         temp.pharmacyName = values.pharmacyName == "" ? false : true;
         temp.patientName = values.patientName == "" ? false : true;
         temp.patientAge = values.patientAge == "" ? false : true;
         temp.address= values.address == "" ? false : true;
-        temp.email = values.email == "" ? false : true;
-        temp.teleNo = values.teleNo == "" ? false : true;
+        //temp.email = values.email == "" ? false : true;
+        //temp.teleNo = values.teleNo == "" ? false : true;
         setErrors(temp)
         return Object.values(temp).every(x => x == true)
     }
@@ -121,8 +123,8 @@ export default function Upload(props) {
         formData.append('patientName',values.patientName)
         formData.append('patientAge',values.patientAge)
         formData.append('address',values.address)
-        formData.append('email',values.email)
-        formData.append('teleNo',values.teleNo)
+        formData.append('email',custmail)
+        formData.append('teleNo',custtele)
         formData.append('customerId',custid)
         formData.append('pharmacyId',myphmcy)
         formData.append('imageName',values.imageName)
@@ -171,9 +173,9 @@ const applyErrorClass = field => ((field in errors && errors[field] == false) ? 
                         <input className={"form-control"+ applyErrorClass('pharmacyName')} placeholder="Pharmacy Name" name="pharmacyName" value={values.pharmacyName} onChange={ handleInputChange}/>
                     </div>
 
-                    <div className="form-group">
-                        <input className={"form-control" + applyErrorClass('customerName')}  placeholder="Your Name" name="customerName" value={custname} onChange={ handleInputChange}/>
-                    </div>
+                    {/*<div className="form-group">
+                        <input className={"form-control" + applyErrorClass('customerName')}  placeholder="Your Name" name="customerName" value={values.customerName} onChange={ handleInputChange}/>
+    </div>*/}
 
                     <div className="form-group">
                         <input className={"form-control"+ applyErrorClass('patientName')} placeholder="Patient Name" name="patientName" value={values.patientName} onChange={ handleInputChange}/>
@@ -187,13 +189,13 @@ const applyErrorClass = field => ((field in errors && errors[field] == false) ? 
                         <input className={"form-control"+ applyErrorClass('address')} placeholder="Delivery address" name="address" value={values.address} onChange={ handleInputChange}/>
                     </div>
 
-                    <div className="form-group">
+                    {/*<div className="form-group">
                         <input className={"form-control" + applyErrorClass('email')}placeholder="Your Email" name="email" value={values.email} onChange={ handleInputChange}/>
-                    </div>
-
+</div>*/}
+                    {/*
                     <div className="form-group">
                         <input className={"form-control"+ applyErrorClass('teleNo')} placeholder="Contact Number" name="teleNo" value={values.teleNo} onChange={ handleInputChange}/>
-                    </div>
+                    </div>*/}
 
                     <div className="form-group text-center">
                         <button type="submit" className="btn btn-light">submit</button>

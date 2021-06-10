@@ -15,11 +15,11 @@ const InfoSection = ({primary, lightBg, imgStart, lightTopLine, lightTextDesc, b
                                 <TopLine lightTopLine={lightTopLine}>{topLine}</TopLine>
                                 <Heading lightText={lightText}>{headline}</Heading>
                                 <Subtitle lightTextDesc={lightTextDesc}>{description}</Subtitle>
-                                <Link to='/sign-in'>
+                               {/* <Link to='/'>
                                     <Button big fontBig primary={primary}>
                                         {buttonLabel}
                                     </Button>
-                                </Link>
+    </Link>*/}
                             </TextWrapper>
                             <ImgWrapper start = {start}>
                                  <Img src = {img} alt={alt}/>

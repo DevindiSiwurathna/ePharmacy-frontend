@@ -37,10 +37,12 @@ console.log(custid);
 
 
 //console.log(custid);
-  const deleteOrder = async orderId => {
-    await axios.delete(`http://localhost:44357/Orders/${orderId}`);
+  const deleteOrder = async (orderID) => {
+   alert("Are you sure you want to delete?")
+    await axios.delete(`https://localhost:44357/api/Orders/${orderID}`);
     loadOrders();
   };
+  
 
   return (
     <div className="container">
@@ -97,19 +99,21 @@ console.log(custid);
                   >
                     Edit
          </Link>*/} {order.complete ? null:(
-                  <Link
-                    class="btn btn-danger"
+                  <button
+                    className="btn btn-danger"
                     onClick={() => deleteOrder(order.orderID)}
                   >
                     Delete
-                  </Link>)}
+                  </button>)}
                   {order.complete ?(
                   <Link
                     class="btn btn-info" 
                   >
                     Pay 
                   </Link>):null}
+                  
           </td>
+         
 
               </tr>
             ))}

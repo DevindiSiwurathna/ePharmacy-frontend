@@ -4,7 +4,7 @@ import axios from "axios";
 import { Link, withRouter } from "react-router-dom";
 import { useLocation, useParams } from 'react-router';
 
-export default function Uploadlist({custid,custname}) {
+export default function Uploadlist({custid,custname,custmail,custtele}) {
 
     
     //let url = new URL()
@@ -58,6 +58,8 @@ export default function Uploadlist({custid,custname}) {
                     myphmcy = {myphmcy}
                     custid = {custid}
                     custname = {custname}
+                    custmail={custmail}
+                    custtele={custtele}
                 />
                 </div> 
                 <div className="col-md-1">
