@@ -102,7 +102,7 @@ if(this.state.userrole === "Customer"){
                 <Link className="nav-link" to = {"/services"}>Products</Link>
                 </li>
                 <li className="nav-item"> 
-                <Link className="nav-link" to={`/customer/${custid}`}>Customer</Link>
+                <Link className="nav-link" to={`/customer/${custid}`}>{this.state.username}</Link>
                 </li>
                 <li className="nav-item">
               <Link to="/cart" className="ml-auto">
@@ -116,7 +116,7 @@ if(this.state.userrole === "Customer"){
               </li>
 
               <li className="nav-item">
-              Hi! {this.state.username}
+              {/*Hi! {this.state.username}*/}
               <button type="submit" className="btn btn-dark btn-sm" onClick={() => localStorage.clear()}>Logout</button>
               {/*<Username/>*/}
               </li>
@@ -188,10 +188,10 @@ else if(this.state.userrole === "Pharmacy"){
                 <Link className="nav-link" to = {"/services"}>Services</Link>
                 </li>
                 <li className="nav-item"> 
-                <Link className="nav-link" to={`/pharmacy/${phmid}`}>pharmacy</Link>
+                <Link className="nav-link" to={`/pharmacy/${phmid}`}>{this.state.username}</Link>
                 </li>
                 <li className="nav-item">
-              Hi! {this.state.username}
+              {/*Hi! {this.state.username}*/}
               <button type="submit" className="btn btn-dark btn-sm" onClick={() => localStorage.clear() } >Logout</button>
               </li>
             </ul>
