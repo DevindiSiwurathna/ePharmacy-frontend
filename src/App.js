@@ -191,7 +191,7 @@ else if(this.state.userrole === "Pharmacy"){
                 <Link className="nav-link" to={`/pharmacy/${phmid}`}>{this.state.username}</Link>
                 </li>
                 <li className="nav-item">
-              {/*Hi! {this.state.username}*/}
+              
               <button type="submit" className="btn btn-dark btn-sm" onClick={() => localStorage.clear() } >Logout</button>
               </li>
             </ul>
