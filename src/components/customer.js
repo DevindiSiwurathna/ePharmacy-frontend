@@ -23,6 +23,12 @@ console.log(custid);
     setOrder(result.data.reverse());
   };
 
+  const newOrder = orders.filter(order => {
+    return order.complete === false;
+  })
+
+  console.log(newOrder);
+  console.log(newOrder.length);
   /*const [name, setName] = useState([]);
 
   useEffect(()=>{
@@ -51,6 +57,7 @@ console.log(custid);
         <h1>{res.data.customerName}</h1>))}*/}
         <h1>{custname}'s Orders</h1>
         <hr/>
+        <p>You have {newOrder.length} Orders Pending Approval from Pharmacy.</p>
         <table class="table border shadow">
           <thead class="thead-dark">
           
