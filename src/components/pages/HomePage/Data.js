@@ -9,7 +9,7 @@ export const homeObjOne = {
     headline: 'Find the Best Pharmacy for You. We Have Many.',
     lightText:true,
     topLine:'YOUR HEALTH - OUR WEALTH',
-    img: require('./img/pic.svg').default, 
+    img: require('./img/undraw_medicine_b1ol.svg').default, 
     alt:'we deliver you the best!',
     start: true,
 };
@@ -25,7 +25,7 @@ export const homeObjTwo = {
     headline: 'Let Your Customers Reach You From Home.',
     lightText:false,
     topLine:'YOUR HEALTH - OUR WEALTH',
-    img:require('./img/pic3.svg').default,
+    img:require('./img/undraw_On_the_way_re_swjt.svg').default,
     alt:'This is easy!',
     start: false,
 };
