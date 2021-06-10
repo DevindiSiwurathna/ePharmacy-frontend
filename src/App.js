@@ -29,7 +29,7 @@ import Order from './components/orders/order';
 import Customer from "./components/customer";
 //import CustomerService from "./components/customerservice";
 import Username from "./components/username";
-import EditOderList from './components/editorderlist';
+import Edit from './components/edit';
 import Uplist from './components/up/uplist';
 import Up from './components/up/up';
 import Chatbot from 'react-chatbot-kit';
@@ -60,6 +60,8 @@ componentDidMount() {
     this.setState( {username: currentuser.name });
     this.setState( {usermail: currentuser.mail });
     this.setState( {usertele: currentuser.tele });
+
+    
  }
 
 }
@@ -74,9 +76,10 @@ if(this.state.userrole === "Customer"){
   console.log(this.state.username);
   console.log(this.state.usermail);
   console.log(this.state.usertele);
-  const custname=this.state.username;
+  const custmail=this.state.usermail;
   const custid=this.state.userid;
   console.log(custid);
+  console.log(custmail);
   
   return (<Router>
     <GlobalStyle/>
@@ -130,7 +133,7 @@ if(this.state.userrole === "Customer"){
             {/*<Route path="/Uploadlist" component={UploadList} />*/}
             {/*<Route path="/Uploadlist" render={props => <UploadList {...props.match.params} />}/>*/}
            {/* <Route path="/Uploadlist" component={props => <UploadList custid={props.match.params.custid}/>}/> */}
-            <Route path="/Uploadlist" render={props => (<UploadList custid={this.state.userid} custname={this.state.username}/>)}/> 
+            <Route path="/Uploadlist" render={props => (<UploadList custid={this.state.userid} custname={this.state.username} custmail={this.state.usermail} custtele={this.state.usertele}/>)}/> 
             <Route path="/username" render = {props => (<Username custid={this.state.userid} />)}/>
             <Route path="/Uplist/:myphmcy" render={props => (<Uplist custid={this.state.userid} />)}/> 
             <Route path="/Up" component={Up} />
@@ -145,7 +148,7 @@ if(this.state.userrole === "Customer"){
             <Route path = "/customer/:custid" render={props => (<Customer custname={this.state.username} />)}/>
             {/*<Route path="/Addproduct" component={Addproduct} />*/}
             <Route path="/ProductList" component={ProductList} />
-            <Route path = "/editorderlist/:orderID" component = {EditOderList}/>
+            <Route path = "/edit/:orderID" component = {Edit}/>
             
             {/*<Route path="/CustomerService" component={CustomerService} />*/}
 
@@ -192,8 +195,10 @@ else if(this.state.userrole === "Pharmacy"){
                 <li className="nav-item"> 
                 <Link className="nav-link" to={`/pharmacy/${phmid}`}>pharmacy</Link>
                 </li>
+                <li className="nav-item">
+              Hi! {this.state.username}
               <button type="submit" className="btn btn-dark btn-sm" onClick={() => localStorage.clear() } >Logout</button>
-              
+              </li>
             </ul>
           </div>
         </div>
