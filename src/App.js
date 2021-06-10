@@ -37,6 +37,7 @@ import ActionProvider from './components/chatbot/ActionProvider';
 import MessageParser from './components/chatbot/MessageParser';
 import config from './components/chatbot/config';
 import Draggable from 'react-draggable'; // The default
+import NotFound from "./components/NotFound";
 
 export default class App extends Component {
 
@@ -102,7 +103,7 @@ if(this.state.userrole === "Customer"){
                 <Link className="nav-link" to = {"/services"}>Products</Link>
                 </li>
                 <li className="nav-item"> 
-                <Link className="nav-link" to={`/customer/${custid}`}>{this.state.username}</Link>
+                <Link className="nav-link" to={`/customer/${custid}`}>Customer</Link>
                 </li>
                 <li className="nav-item">
               <Link to="/cart" className="ml-auto">
@@ -116,7 +117,7 @@ if(this.state.userrole === "Customer"){
               </li>
 
               <li className="nav-item">
-              {/*Hi! {this.state.username}*/}
+              Hi! {this.state.username}
               <button type="submit" className="btn btn-dark btn-sm" onClick={() => localStorage.clear()}>Logout</button>
               {/*<Username/>*/}
               </li>
@@ -149,7 +150,7 @@ if(this.state.userrole === "Customer"){
             {/*<Route path="/Addproduct" component={Addproduct} />*/}
             <Route path="/ProductList" component={ProductList} />
             <Route path = "/edit/:orderID" component = {Edit}/>
-            
+            <Route component={NotFound} />
             {/*<Route path="/CustomerService" component={CustomerService} />*/}
 
             
@@ -188,10 +189,10 @@ else if(this.state.userrole === "Pharmacy"){
                 <Link className="nav-link" to = {"/services"}>Services</Link>
                 </li>
                 <li className="nav-item"> 
-                <Link className="nav-link" to={`/pharmacy/${phmid}`}>{this.state.username}</Link>
+                <Link className="nav-link" to={`/pharmacy/${phmid}`}>pharmacy</Link>
                 </li>
                 <li className="nav-item">
-              
+              Hi! {this.state.username}
               <button type="submit" className="btn btn-dark btn-sm" onClick={() => localStorage.clear() } >Logout</button>
               </li>
             </ul>
@@ -211,6 +212,7 @@ else if(this.state.userrole === "Pharmacy"){
             <Route path = "/orders/:orderID" component = {Order}/>
             {/*<Route path="/Addproduct" component={Addproduct} />*/}
             <Route path="/ProductList" component={ProductList} />
+            <Route component={NotFound} />
 
         </Switch>
         
@@ -266,6 +268,7 @@ else {
             <Route path="/working" component={working} />
             <Route path="/Forgotpassword" component={Forgotpassword} />
             <Route path="/search" component={Search} />
+            <Route component={NotFound} />
 
             {/*<Route path="/Addproduct" component={Addproduct} />*/}
 
