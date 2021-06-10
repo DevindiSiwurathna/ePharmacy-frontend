@@ -22,10 +22,17 @@ const Pharmacy = ({phmname}) => {
     loadOrders();
   };*/
 
+  const newOrder = orders.filter(order => {
+    return order.complete === false;
+  })
+
+  console.log(newOrder);
+  console.log(newOrder.length);
   return (
     <div className="container">
       <div className="py-4">
         <h1>{phmname}</h1><hr/>
+        <p>You Have {(newOrder.length)} Pending Orders!</p>
         <table class="table border shadow">
           <thead class="thead-dark">
             <tr>
@@ -79,6 +86,7 @@ const Pharmacy = ({phmname}) => {
             ))}
           </tbody>
         </table>
+        
       </div>
     </div>
   );
